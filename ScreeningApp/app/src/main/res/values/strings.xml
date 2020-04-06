@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">ScreeningApp</string>
+<!-- App bar -->
+    <string name="appBar_event">EVENT</string>
+    <string name="appBar_guest">GUEST</string>
+<!-- Text View -->
+    <string name="txv_name">Nama\t\t\t\t\t:</string>
+
+<!-- hint-->
+    <string name="hint_name">Masukkan Nama..</string>
+
+<!-- Button-->
+    <string name="btn_next">Selesai</string>
+    <string name="btn_event">Pilih Event</string>
+    <string name="btn_guest">Pilih Guest</string>
+<!--    txv-->
+    <string name="txv_detail">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse nunc mauris, eleifend nec tristique vitae, maximus id arcu. Morbi quis aliquet justo, vel porttitor lorem...</string>
+</resources>
