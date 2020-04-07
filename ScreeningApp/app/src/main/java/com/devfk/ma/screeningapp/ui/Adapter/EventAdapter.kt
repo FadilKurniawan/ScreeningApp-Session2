@@ -1,8 +1,8 @@
 package com.devfk.ma.screeningapp.ui.Adapter
 
 import android.annotation.SuppressLint
+import android.app.ActionBar
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,17 +26,34 @@ class EventAdapter(nameItem: ArrayList<Event>) : BaseAdapter(){
         // Get the custom view widgets reference
         val title = view.findViewById<TextView>(R.id.txvNameEvent)
         val date = view.findViewById<TextView>(R.id.txvDateEvent)
-//        val hashtag = view.findViewById<TextView>(R.id.txvNameEvent)
+        val hashtag = view.findViewById<LinearLayout>(R.id.layTagEvent)
         val detail = view.findViewById<TextView>(R.id.txvDetailEvent)
         val image = view.findViewById<ImageView>(R.id.imgEvent)
 
         title.text = item[position].name
         date.text = item[position].date
         detail.text = item[position].detail
+        
+        for (tag in item[position].hashtag){
+            var text = TextView(parent.context)
+            text.text = tag
+            text.setTextColor(parent.context.resources.getColor(R.color.white))
+            text.setBackgroundColor(parent.context.resources.getColor(R.color.bluGrey))
+            text.layoutParams = getSpacing()
+            text.setPadding(5,2,5,2)
+            hashtag.addView(text)
+        }
 
         image.setBackgroundResource(item[position].image)
 
         return view
+    }
+
+    private fun getSpacing(): ViewGroup.LayoutParams? {
+        val params: LinearLayout.LayoutParams =
+            LinearLayout.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT)
+        params.setMargins(0, 5, 20, 0)
+        return params
     }
 
     override fun getItem(position: Int): Any? {

@@ -4,28 +4,26 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import com.devfk.ma.screeningapp.R
 import com.devfk.ma.screeningapp.data.Model.Event
+import com.devfk.ma.screeningapp.ui.Component.CarouselAdapter
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import com.synnapps.carouselview.CarouselView
-import com.synnapps.carouselview.ImageListener
-import kotlinx.android.synthetic.main.fragment_map.*
 
 
-class MapFragment : Fragment() , OnMapReadyCallback {
+class MapFragment : Fragment() , OnMapReadyCallback , CarouselAdapter.EventListener{
+
    private var list: ArrayList<Event> = ArrayList()
-    var carouselView: CarouselView? = null
 
+    var viewPager: ViewPager? = null
+    private var onMapReady:Boolean =false;
     private lateinit var mMap: GoogleMap
     companion object {
 
@@ -42,32 +40,24 @@ class MapFragment : Fragment() , OnMapReadyCallback {
         savedInstanceState: Bundle?
     ): View? {
         var view = inflater.inflate(R.layout.fragment_map, container, false)
-        carouselView = view.findViewById<CarouselView>(R.id.carouselView)
-        val mapFragment = childFragmentManager.findFragmentById(R.id.maps) as SupportMapFragment
-        mapFragment.getMapAsync(this)
-
+        viewPager = view.findViewById<ViewPager>(R.id.viewPager)
         initialization()
+
+        var adapter = CarouselAdapter(list,activity)
+        viewPager?.adapter = adapter
+        viewPager?.clipToPadding = false
+        viewPager?.setPadding(100,0,100,0)
 
         return view
     }
 
     private fun initialization() {
-//        Toast.makeText(context,list.size.toString(),Toast.LENGTH_LONG).show()
-        carouselView?.setPageCount(list.size)
-        carouselView?.setImageListener(imageListener)
-
-
-    }
-
-    var imageListener: ImageListener = object : ImageListener {
-        override fun setImageForPosition(position: Int, imageView: ImageView) {
-            imageView.setImageResource(list[position].image)
-        }
+        val mapFragment = childFragmentManager.findFragmentById(R.id.maps) as SupportMapFragment
+        mapFragment.getMapAsync(this)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -80,27 +70,27 @@ class MapFragment : Fragment() , OnMapReadyCallback {
             .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
             .title(list[0].name)).showInfoWindow()
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(first, 17f))
-        carouselPageListener()
-
+        setScrolled()
     }
 
-    private fun carouselPageListener() {
-        carouselView?.addOnPageChangeListener(object: ViewPager.OnPageChangeListener {
+    private fun setScrolled() {
+        viewPager?.setOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {
             }
+
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
                 val move = LatLng(list[position].lat.toDouble(), list[position].long.toDouble())
                 changeColorDefault()
                 mMap.addMarker(MarkerOptions()
-                    .position(LatLng(list[position].lat.toDouble(), list[position].long.toDouble()))
+                    .position(move)
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
                     .title(list[position].name)).showInfoWindow()
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(move, 17f))
             }
 
             override fun onPageSelected(position: Int) {
-                //Update your layout here
             }
+
         })
     }
 
@@ -113,4 +103,10 @@ class MapFragment : Fragment() , OnMapReadyCallback {
         }
     }
 
+    override fun onEvent(data: Int) {
+
+    }
+
+
 }
+

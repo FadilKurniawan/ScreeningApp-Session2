@@ -93,12 +93,14 @@ class EventActivity : AppCompatActivity() ,AdapterView.OnItemClickListener,View.
     }
 
     private fun onMediaClick() {
-        fragment_container.visibility = View.VISIBLE
-        val mapFragment = MapFragment.newInstance(eventList)
-        val manager = supportFragmentManager
-        val transaction = manager.beginTransaction()
-        transaction.replace(R.id.fragment_container,mapFragment)
-        transaction.addToBackStack(null)
-        transaction.commit()
+        if(fragment_container.visibility==View.GONE){
+            fragment_container.visibility = View.VISIBLE
+            val mapFragment = MapFragment.newInstance(eventList)
+            val manager = supportFragmentManager
+            val transaction = manager.beginTransaction()
+            transaction.replace(R.id.fragment_container,mapFragment)
+            transaction.addToBackStack(null)
+            transaction.commit()
+        }
     }
 }

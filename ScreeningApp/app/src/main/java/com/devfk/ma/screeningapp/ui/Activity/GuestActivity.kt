@@ -76,6 +76,9 @@ class GuestActivity : AppCompatActivity(), AdapterView.OnItemClickListener ,IGue
     }
 
     override fun onDataError(throwable: Throwable) {
+        if(swipe.isRefreshing){
+            swipe.isRefreshing = false
+        }
         Toast.makeText(this,"Error: $throwable",Toast.LENGTH_LONG).show()
     }
 

@@ -35,15 +35,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"/>
 
-            <TextView
-                android:id="@+id/txvTagEvent"
-                android:textSize="12sp"
-                android:textColor="@color/white"
-                android:text=" #nutricia "
-                android:background="@color/bluGrey"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/layTagEvent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"/>
+                />
 
             <TextView
                 android:id="@+id/txvDetailEvent"
