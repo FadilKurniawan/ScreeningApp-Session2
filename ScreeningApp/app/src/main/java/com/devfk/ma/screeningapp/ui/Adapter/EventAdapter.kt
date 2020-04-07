@@ -26,10 +26,14 @@ class EventAdapter(nameItem: ArrayList<Event>) : BaseAdapter(){
         // Get the custom view widgets reference
         val title = view.findViewById<TextView>(R.id.txvNameEvent)
         val date = view.findViewById<TextView>(R.id.txvDateEvent)
+//        val hashtag = view.findViewById<TextView>(R.id.txvNameEvent)
+        val detail = view.findViewById<TextView>(R.id.txvDetailEvent)
         val image = view.findViewById<ImageView>(R.id.imgEvent)
 
         title.text = item[position].name
         date.text = item[position].date
+        detail.text = item[position].detail
+
         image.setBackgroundResource(item[position].image)
 
         return view

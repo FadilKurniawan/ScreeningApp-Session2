@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/layoutheaderbase"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content" >
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="5dp">
 
     <LinearLayout
         android:id="@+id/headerLayout"
@@ -24,6 +25,7 @@
             android:id="@+id/headerText"
             android:layout_weight="2"
             android:padding="10dp"
+            android:layout_marginLeft="10dp"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:textColor="@color/gold"
@@ -39,6 +41,7 @@
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:background="@drawable/btn_media"/>
+
 
     </LinearLayout>
 

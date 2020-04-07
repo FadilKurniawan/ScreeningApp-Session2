@@ -10,11 +10,15 @@ import android.widget.Toast
 import com.devfk.ma.screeningapp.R
 import com.devfk.ma.screeningapp.data.Model.Event
 import com.devfk.ma.screeningapp.ui.Adapter.EventAdapter
+import com.devfk.ma.screeningapp.ui.Fragment.MapFragment
 import kotlinx.android.synthetic.main.activity_event.*
 import kotlinx.android.synthetic.main.app_bar.*
 
 class EventActivity : AppCompatActivity() ,AdapterView.OnItemClickListener,View.OnClickListener{
+
     var result:String =""
+    var eventList:ArrayList<Event> = ArrayList<Event>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_event)
@@ -23,17 +27,37 @@ class EventActivity : AppCompatActivity() ,AdapterView.OnItemClickListener,View.
 
     private fun initialization() {
         headerText.text = resources.getString(R.string.appBar_event)
-
-        var eventList:ArrayList<Event> = ArrayList<Event>()
-        eventList.add(Event("Pekan #KreatifDisaatSulit", "April 04 2020", R.drawable.event1))
-        eventList.add(Event("Saturasi Volume 1", "April 03  2020", R.drawable.event3))
-        eventList.add(Event("Charity Selection Night", "March 23 2020", R.drawable.event2))
-        eventList.add(Event("ANGKLUNG MUSIC CONCERT", " March 20 2020", R.drawable.event4))
+        fragment_container.visibility = View.GONE
+        eventList.add(
+            Event("Pekan #KreatifDisaatSulit", "April 04 2020", R.drawable.event1,
+                mutableListOf("#nutricia","#highlight F3"),resources.getString(R.string.txv_detail),
+                        "-6.901267", "107.618681"
+            )
+        )
+        eventList.add(
+            Event("Saturasi Volume 1", "April 03  2020", R.drawable.event3,
+                mutableListOf("#nutricia","#highlight F3"),resources.getString(R.string.txv_detail),
+                "-6.899201", "107.618724"
+            )
+        )
+        eventList.add(
+            Event("Charity Selection Night", "March 23 2020", R.drawable.event2,
+                mutableListOf("#nutricia","#event"),resources.getString(R.string.txv_detail),
+                "-6.900673", "107.615172"
+            )
+        )
+        eventList.add(
+            Event("ANGKLUNG MUSIC CONCERT", " March 20 2020", R.drawable.event4,
+                mutableListOf("#nutricia","#highlight F3","#event"),resources.getString(R.string.txv_detail),
+                "-6.899171", "107.616620"
+            )
+        )
 
         lv_event.adapter = EventAdapter(eventList)
         lv_event.onItemClickListener = this
 
         btn_back.setOnClickListener(this)
+        btn_media.setOnClickListener(this)
         btn_media.visibility = View.VISIBLE
     }
 
@@ -59,12 +83,22 @@ class EventActivity : AppCompatActivity() ,AdapterView.OnItemClickListener,View.
 
     override fun onClick(v: View?) {
         when(v?.id){
-            R.id.btn_back -> onBackPressed()
-            R.id.btn_media -> onMediaClick()
+            R.id.btn_back ->{
+                onBackPressed()
+            }
+            R.id.btn_media ->{
+                onMediaClick()
+            }
         }
     }
 
     private fun onMediaClick() {
-
+        fragment_container.visibility = View.VISIBLE
+        val mapFragment = MapFragment.newInstance(eventList)
+        val manager = supportFragmentManager
+        val transaction = manager.beginTransaction()
+        transaction.replace(R.id.fragment_container,mapFragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
     }
 }

@@ -13,6 +13,8 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptor
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.synnapps.carouselview.CarouselView
@@ -72,18 +74,27 @@ class MapFragment : Fragment() , OnMapReadyCallback {
         mMap = googleMap
         // Add a marker in Sydney and move the camera
         val first = LatLng(list[0].lat.toDouble(), list[0].long.toDouble())
-        for (i in list){
-            mMap.addMarker(MarkerOptions()
-                .position(LatLng(i.lat.toDouble(), i.long.toDouble()))
-                .title(i.name))
-        }
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(first, 15f))
+        changeColorDefault()
+        mMap.addMarker(MarkerOptions()
+            .position(first)
+            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
+            .title(list[0].name)).showInfoWindow()
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(first, 17f))
+        carouselPageListener()
 
+    }
+
+    private fun carouselPageListener() {
         carouselView?.addOnPageChangeListener(object: ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {
             }
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
                 val move = LatLng(list[position].lat.toDouble(), list[position].long.toDouble())
+                changeColorDefault()
+                mMap.addMarker(MarkerOptions()
+                    .position(LatLng(list[position].lat.toDouble(), list[position].long.toDouble()))
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
+                    .title(list[position].name)).showInfoWindow()
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(move, 17f))
             }
 
@@ -91,6 +102,15 @@ class MapFragment : Fragment() , OnMapReadyCallback {
                 //Update your layout here
             }
         })
+    }
+
+    private fun changeColorDefault() {
+        for (i in list){
+            mMap.addMarker(MarkerOptions()
+                .position(LatLng(i.lat.toDouble(), i.long.toDouble()))
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
+                .title(i.name)).showInfoWindow()
+        }
     }
 
 }
