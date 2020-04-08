@@ -11,8 +11,12 @@
     Package name:
     com.devfk.ma.screeningapp
 
+    debug:
     SHA-1 certificate fingerprint:
     35:F0:96:A4:74:7C:FD:CE:72:42:CF:15:01:FA:38:26:9F:A3:85:87
+
+    release:
+    87:7A:EE:E6:95:E2:77:B6:AF:4A:00:F0:68:87:CD:04:04:36:F4:F8
 
     Alternatively, follow the directions here:
     https://developers.google.com/maps/documentation/android/start#get-key
@@ -20,5 +24,5 @@
     Once you have your key (it starts with "AIza"), replace the "google_maps_key"
     string in this file.
     -->
-    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyB9sDJtxGM38MAHHg7mCagBRM3gRJYNluc</string>
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyBm4B3FWApi1S307oYecTGQfAaWujTz_2k</string>
 </resources>
